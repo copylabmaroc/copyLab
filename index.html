@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CopyLab | Agency</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --blue: #2575fc;
+            --purple: #6a11cb;
+            --dark: #08080a;
+            --card: #121214;
+            --gradient: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--dark); color: white; overflow-x: hidden; scroll-behavior: smooth; font-family: 'Cairo', sans-serif; }
+        body.en { font-family: 'Poppins', sans-serif; }
+
+        /* --- Navbar --- */
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 8%; position: fixed; width: 100%; top: 0; z-index: 1000;
+            background: rgba(8, 8, 10, 0.85); backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .logo-box img { height: 50px; border-radius: 5px; transition: var(--transition); }
+        .logo-box img:hover { transform: scale(1.05); filter: drop-shadow(0 0 10px var(--blue)); }
+
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links a { color: white; text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: 0.3s; }
+        .nav-links a:hover { color: var(--blue); }
+
+        /* --- زر التحويل الفاخر --- */
+        .lang-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--blue);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            font-weight: 600;
+            transition: var(--transition);
+            z-index: 1;
+        }
+        .lang-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: var(--gradient);
+            transition: var(--transition);
+            z-index: -1;
+        }
+        .lang-btn:hover {
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 117, 252, 0.4);
+        }
+        .lang-btn:hover::before { left: 0; }
+
+        /* --- Hero Section --- */
+        .hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 5%; }
+        .hero h1 { font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 20px; line-height: 1.2; }
+        .highlight { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { color: #aaa; max-width: 650px; margin: 0 auto 35px; font-size: 1.1rem; }
+
+        .btn-cta { 
+            padding: 15px 40px; background: var(--gradient); color: white; border: none;
+            border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 1rem;
+            text-decoration: none; display: inline-block; transition: var(--transition);
+        }
+        .btn-cta:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(106, 17, 203, 0.4); }
+
+        /* --- Services --- */
+        .services { padding: 120px 8%; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 60px; }
+        .card { background: var(--card); padding: 50px 30px; border-radius: 25px; transition: 0.4s; border: 1px solid rgba(255,255,255,0.02); }
+        .card:hover { border-color: var(--purple); transform: translateY(-15px); background: #18181b; }
+        .card i { font-size: 3rem; margin-bottom: 25px; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* --- Contact Section --- */
+        .contact { padding: 100px 8%; background: #050505; }
+        .contact-box { max-width: 750px; margin: 0 auto; background: var(--card); padding: 60px 40px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.03); }
+        .input-group { margin-bottom: 25px; }
+        .input-group input, .input-group textarea {
+            width: 100%; padding: 16px; background: #08080a; border: 1px solid #333; color: white; border-radius: 12px; outline: none; transition: 0.3s;
+        }
+        .input-group input:focus, .input-group textarea:focus { border-color: var(--blue); box-shadow: 0 0 10px rgba(37, 117, 252, 0.2); }
+
+        /* --- Floating Icons --- */
+        .floating { position: fixed; bottom: 35px; left: 35px; display: flex; flex-direction: column; gap: 20px; z-index: 2000; }
+        .f-icon { width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 28px; text-decoration: none; box-shadow: 0 10px 25px rgba(0,0,0,0.5); transition: var(--transition); }
+        .wa { background: #25d366; }
+        .ig { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
+        .f-icon:hover { transform: scale(1.15) rotate(10deg); }
+
+        @media (max-width: 768px) { .nav-links { display: none; } .contact-box { padding: 40px 20px; } }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo-box"><img src="logo.jpg" alt="Logo"></div>
+        <ul class="nav-links">
+            <li><a href="#home" id="navHome">الرئيسية</a></li>
+            <li><a href="#services" id="navServices">خدماتنا</a></li>
+            <li><a href="#contact" id="navContact">تواصل معنا</a></li>
+        </ul>
+        <button class="lang-btn" onclick="toggleLang()" id="lBtn">English</button>
+    </nav>
+
+    <section class="hero" id="home">
+        <div data-aos="fade-up">
+            <h1 id="hTitle">نصيغ لك محتوى <span class="highlight">يخطف الأبصار</span></h1>
+            <p id="hDesc">في CopyLab، نحول الأفكار إلى نصوص إبداعية وسيناريوهات ملهمة تعزز حضور علامتك التجارية.</p>
+            <a href="#contact" class="btn-cta" id="hBtn">ابدأ مشروعك الآن</a>
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <h2 style="font-size: 2.8rem;" id="sTitle">خدماتنا الاحترافية</h2>
+        <div class="grid">
+            <div class="card" data-aos="fade-right">
+                <i class="fas fa-pen-fancy"></i>
+                <h3 id="s1t">كوبي رايتينغ</h3>
+                <p id="s1d">نصوص إعلانية ذكية ترفع مبيعاتك وتجذب عملاءك المستهدفين.</p>
+            </div>
+            <div class="card" data-aos="fade-left">
+                <i class="fas fa-clapperboard"></i>
+                <h3 id="s2t">سكريبت رايتينغ</h3>
+                <p id="s2d">كتابة سيناريوهات احترافية تضمن بقاء جمهورك متفاعلاً حتى آخر ثانية.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="contact-box" data-aos="zoom-in">
+            <h2 style="text-align: center; margin-bottom: 40px; font-size: 2rem;" id="cTitle">تواصل مع الخبراء</h2>
+            <form id="waForm">
+                <div class="input-group"><input type="text" id="name" placeholder="الاسم الكامل" required></div>
+                <div class="input-group"><input type="email" id="email" placeholder="البريد الإلكتروني" required></div>
+                <div class="input-group"><textarea id="msg" rows="5" placeholder="اكتب تفاصيل مشروعك هنا..." required></textarea></div>
+                <button type="button" onclick="handleWhatsApp()" class="btn-cta" id="cBtn" style="width: 100%;">إرسال </button>
+            </form>
+        </div>
+    </section>
+
+    <div class="floating">
+        <a href="https://wa.me/212703605819" class="f-icon wa" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://instagram.com/copylab.ma" class="f-icon ig" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        let currentLang = 'ar';
+        const dict = {
+            en: {
+                navHome: 'Home', navServices: 'Services', navContact: 'Contact Us',
+                hTitle: 'Crafting Words That <span class="highlight">Captivate</span>',
+                hDesc: 'At CopyLab, we transform ideas into creative texts and inspiring scripts that boost your brand presence.',
+                hBtn: 'Start Your Journey',
+                sTitle: 'Our Professional Services',
+                s1t: 'Copywriting', s1d: 'Smart ad copies that boost your sales and attract your target audience.',
+                s2t: 'Scriptwriting', s2d: 'Professional scriptwriting that keeps your audience engaged until the last second.',
+                cTitle: 'Connect With Experts',
+                cBtn: 'Send via WhatsApp',
+                nameP: 'Full Name', emailP: 'Email Address', msgP: 'Describe your project here...',
+                lBtn: 'العربية',
+                alert: 'Please fill all fields'
+            },
+            ar: {
+                navHome: 'الرئيسية', navServices: 'خدماتنا', navContact: 'تواصل معنا',
+                hTitle: 'نصيغ لك محتوى <span class="highlight">يخطف الأبصار</span>',
+                hDesc: 'في CopyLab، نحول الأفكار إلى نصوص إبداعية وسيناريوهات ملهمة تعزز حضور علامتك التجارية.',
+                hBtn: 'ابدأ مشروعك الآن',
+                sTitle: 'خدماتنا الاحترافية',
+                s1t: 'كوبي رايتينغ', s1d: 'نصوص إعلانية ذكية ترفع مبيعاتك وتجذب عملاءك المستهدفين.',
+                s2t: 'سكريبت رايتينغ', s2d: 'كتابة سيناريوهات احترافية تضمن بقاء جمهورك متفاعلاً حتى آخر ثانية.',
+                cTitle: 'تواصل مع الخبراء',
+                cBtn: 'إرسال عبر واتساب',
+                nameP: 'الاسم الكامل', emailP: 'البريد الإلكتروني', msgP: 'اكتب تفاصيل مشروعك هنا...',
+                lBtn: 'English',
+                alert: 'الرجاء ملء جميع الخانات'
+            }
+        };
+
+        function toggleLang() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            
+            // إضافة كلاس للجسم لتغيير الخط
+            if(currentLang === 'en') document.body.classList.add('en');
+            else document.body.classList.remove('en');
+
+            // ترجمة النافبار
+            document.getElementById('navHome').innerText = dict[currentLang].navHome;
+            document.getElementById('navServices').innerText = dict[currentLang].navServices;
+            document.getElementById('navContact').innerText = dict[currentLang].navContact;
+
+            // ترجمة الهيرو
+            document.getElementById('hTitle').innerHTML = dict[currentLang].hTitle;
+            document.getElementById('hDesc').innerText = dict[currentLang].hDesc;
+            document.getElementById('hBtn').innerText = dict[currentLang].hBtn;
+
+            // ترجمة الخدمات
+            document.getElementById('sTitle').innerText = dict[currentLang].sTitle;
+            document.getElementById('s1t').innerText = dict[currentLang].s1t;
+            document.getElementById('s1d').innerText = dict[currentLang].s1d;
+            document.getElementById('s2t').innerText = dict[currentLang].s2t;
+            document.getElementById('s2d').innerText = dict[currentLang].s2d;
+
+            // ترجمة صفحة التواصل بالكامل
+            document.getElementById('cTitle').innerText = dict[currentLang].cTitle;
+            document.getElementById('cBtn').innerText = dict[currentLang].cBtn;
+            document.getElementById('name').placeholder = dict[currentLang].nameP;
+            document.getElementById('email').placeholder = dict[currentLang].emailP;
+            document.getElementById('msg').placeholder = dict[currentLang].msgP;
+
+            // زر اللغة
+            document.getElementById('lBtn').innerText = dict[currentLang].lBtn;
+        }
+
+        function handleWhatsApp() {
+            const n = document.getElementById('name').value;
+            const e = document.getElementById('email').value;
+            const m = document.getElementById('msg').value;
+            if(n && e && m) {
+                const head = currentLang === 'ar' ? 'مرحباً CopyLab' : 'Hello CopyLab';
+                const labelName = currentLang === 'ar' ? 'الاسم' : 'Name';
+                const labelMsg = currentLang === 'ar' ? 'الرسالة' : 'Message';
+                const text = `${head}%0A*${labelName}:* ${n}%0A*Email:* ${e}%0A*${labelMsg}:* ${m}`;
+                window.open(`https://wa.me/212703605819?text=${text}`, '_blank');
+            } else {
+                alert(dict[currentLang].alert);
+            }
+        }
+    </script>
+</body>
+</html>
